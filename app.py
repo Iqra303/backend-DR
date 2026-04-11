@@ -132,7 +132,8 @@ def output_file(filename):
 
 # ---------------- RUN SERVER ----------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render port
+    app.run(host="0.0.0.0", port=port)
 # import os
 # import uuid
 # import numpy as np
