@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.efficientnet import preprocess_input
 from PIL import Image
-
+from huggingface_hub import hf_hub_download
 from gradcam import generate_gradcam
 from lesion_map import generate_lesion_map
 
@@ -25,10 +25,20 @@ OUTPUT_FOLDER = "outputs"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# ---------------- LOAD MODEL ----------------
+model_path = hf_hub_download(
+    repo_id="iqrakhawar/eye-disease-model",
+    filename="eb7_best.keras"
+)
+
 print("Loading model...")
-model = load_model("model/eb7_best.keras", compile=False)
+model = load_model(model_path, compile=False)
+
 print("Model loaded!")
+
+# # ---------------- LOAD MODEL ----------------
+# print("Loading model...")
+# model = load_model("model/eb7_best.keras", compile=False)
+# print("Model loaded!")
 
 # ---------------- CLASS & RISK DEFINITIONS ----------------
 class_names = ["No DR", "Mild", "Moderate", "Severe", "Proliferative"]
